@@ -1,0 +1,42 @@
+[
+  {
+    "doc_id": "master_agreement_v2.pdf",
+    "page": 1,
+    "bbox": [72.0, 100.0, 520.0, 140.0],
+    "text": "1.1 Initial Term: This Master Services Agreement shall commence on January 15, 2024 and shall continue in full force for twenty-four (24) months.",
+    "score": 0.95,
+    "section": "Clause 1: Term and Commencement"
+  },
+  {
+    "doc_id": "master_agreement_v2.pdf",
+    "page": 2,
+    "bbox": [72.0, 200.0, 520.0, 250.0],
+    "text": "4.2 Payment Terms: All undisputed invoices shall be payable within thirty (30) business days following receipt by Acme Corporation.",
+    "score": 0.94,
+    "section": "Clause 4: Fees and Invoicing"
+  },
+  {
+    "doc_id": "master_agreement_v2.pdf",
+    "page": 3,
+    "bbox": [72.0, 320.0, 520.0, 370.0],
+    "text": "8.1 Confidentiality: Neither party shall disclose Confidential Information to any third party without prior written authorization.",
+    "score": 0.91,
+    "section": "Clause 8: Confidentiality"
+  },
+  {
+    "doc_id": "master_agreement_v2.pdf",
+    "page": 4,
+    "bbox": [72.0, 410.0, 520.0, 460.0],
+    "text": "9.3 Termination for Convenience: Either party may terminate this Agreement without cause upon sixty (60) days prior written notice.",
+    "score": 0.93,
+    "section": "Clause 9: Termination"
+  },
+  {
+    "doc_id": "master_agreement_v2.pdf",
+    "page": 5,
+    "bbox": [72.0, 500.0, 520.0, 550.0],
+    "text": "11.1 Limitation of Liability: In no event shall the aggregate liability of Supplier exceed $50,000 USD for all claims arising hereunder.",
+    "score": 0.89,
+    "section": "Clause 11: Liability"
+  }
+]

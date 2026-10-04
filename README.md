@@ -67,12 +67,20 @@ trace/
 - Node.js 18+
 - Docker & Docker Compose (optional)
 
-### 1. Backend Setup
+### 1. Backend Setup & Verification Engine Demo
 ```bash
 cd backend
 python -m venv venv
 # Windows: venv\Scripts\activate | Unix: source venv/bin/activate
 pip install -r requirements.txt
+
+# Run all 65 verification and contract unit tests:
+python -m pytest backend/tests -q
+
+# Run the golden contract verification demo (prints colored verdicts):
+python -m backend.verify.demo
+
+# Run the API server:
 uvicorn backend.app.main:app --reload --port 8000
 ```
 API runs on `http://localhost:8000` (docs at `http://localhost:8000/docs`).

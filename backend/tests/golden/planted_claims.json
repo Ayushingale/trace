@@ -1,0 +1,56 @@
+[
+  {
+    "claim_id": "gold_err_01",
+    "claim_text": "Payment is due within 30 days of invoice receipt.",
+    "claim_type": "duration",
+    "passage_index": 1,
+    "expected_verdict": "CONTRADICTED",
+    "expected_rule": "num.unit_mismatch",
+    "description": "Planted Unit Mismatch: claims 30 calendar days instead of 30 business days"
+  },
+  {
+    "claim_id": "gold_err_02",
+    "claim_text": "Supplier aggregate liability is capped at $100,000.",
+    "claim_type": "numeric",
+    "passage_index": 4,
+    "expected_verdict": "CONTRADICTED",
+    "expected_rule": "num.value_mismatch",
+    "description": "Planted Numeric Value Mismatch: claims $100k instead of $50k"
+  },
+  {
+    "claim_id": "gold_err_03",
+    "claim_text": "Either party shall terminate the agreement after sixty days.",
+    "claim_type": "modal",
+    "passage_index": 3,
+    "expected_verdict": "CONTRADICTED",
+    "expected_rule": "mod.obligation_permission_flip",
+    "description": "Planted Modality Flip: turns permissive right (may) into mandatory duty (shall)"
+  },
+  {
+    "claim_id": "gold_err_04",
+    "claim_text": "Parties are authorized to disclose confidential information to third parties.",
+    "claim_type": "negation",
+    "passage_index": 2,
+    "expected_verdict": "CONTRADICTED",
+    "expected_rule": "neg.polarity_flip",
+    "description": "Planted Negation Flip: inverts strict prohibition on disclosure"
+  },
+  {
+    "claim_id": "gold_err_05",
+    "claim_text": "The supplier maintains certified compliance with ISO 27001 standard across all facilities.",
+    "claim_type": "entity",
+    "passage_index": null,
+    "expected_verdict": "UNSUPPORTED",
+    "expected_rule": "retrieval.no_passages",
+    "description": "Planted Hallucination: claim not mentioned anywhere in source contract"
+  },
+  {
+    "claim_id": "gold_supp_01",
+    "claim_text": "The contract term continues for 24 months.",
+    "claim_type": "duration",
+    "passage_index": 0,
+    "expected_verdict": "SUPPORTED",
+    "expected_rule": "dur.exact_match",
+    "description": "Valid Supported Claim: aligns with clause 1.1"
+  }
+]
