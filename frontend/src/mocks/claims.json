@@ -1,0 +1,95 @@
+[
+  {
+    "claim_id": "c_001",
+    "claim_text": "The contract term is fixed for a period of 24 months.",
+    "char_start": 0,
+    "char_end": 54,
+    "claim_type": "duration",
+    "verdict": "SUPPORTED",
+    "confidence": 0.96,
+    "reason": "Clause 2.1 explicitly specifies an initial duration of 24 calendar months.",
+    "rule_id": "dur.exact_match",
+    "evidence": [
+      {
+        "doc_id": "master_agreement.pdf",
+        "page": 1,
+        "bbox": [72.0, 140.0, 520.0, 168.0],
+        "passage_text": "2.1 Term: This Agreement shall commence on the Effective Date and continue for twenty-four (24) months."
+      }
+    ],
+    "review_status": "none"
+  },
+  {
+    "claim_id": "c_002",
+    "claim_text": "Payment is due within 30 days of invoice receipt.",
+    "char_start": 55,
+    "char_end": 104,
+    "claim_type": "numeric",
+    "verdict": "CONTRADICTED",
+    "confidence": 0.92,
+    "reason": "Source stipulates 30 business days, not 30 calendar days.",
+    "rule_id": "num.unit_mismatch",
+    "evidence": [
+      {
+        "doc_id": "master_agreement.pdf",
+        "page": 3,
+        "bbox": [72.0, 310.0, 520.0, 345.0],
+        "passage_text": "Section 4.2: Undisputed invoices shall be payable within thirty (30) business days following receipt."
+      }
+    ],
+    "review_status": "none"
+  },
+  {
+    "claim_id": "c_003",
+    "claim_text": "The supplier holds ISO 27001 certification across all global data centers.",
+    "char_start": 105,
+    "char_end": 178,
+    "claim_type": "entity",
+    "verdict": "UNSUPPORTED",
+    "confidence": 0.88,
+    "reason": "No record of global ISO 27001 certification exists in the provided document set.",
+    "rule_id": "ent.missing_corroboration",
+    "evidence": [],
+    "review_status": "none"
+  },
+  {
+    "claim_id": "c_004",
+    "claim_text": "Either party may terminate without cause by giving 60 days written notice.",
+    "char_start": 179,
+    "char_end": 253,
+    "claim_type": "modal",
+    "verdict": "SUPPORTED",
+    "confidence": 0.95,
+    "reason": "Clause 9.3 authorizes termination for convenience with sixty days written notice.",
+    "rule_id": "mod.permissive_match",
+    "evidence": [
+      {
+        "doc_id": "master_agreement.pdf",
+        "page": 5,
+        "bbox": [72.0, 220.0, 520.0, 260.0],
+        "passage_text": "9.3 Termination for Convenience: Either party may terminate this Agreement without cause upon sixty (60) days prior written notice."
+      }
+    ],
+    "review_status": "none"
+  },
+  {
+    "claim_id": "c_005",
+    "claim_text": "Liability for consequential damages is uncapped under gross negligence.",
+    "char_start": 254,
+    "char_end": 326,
+    "claim_type": "negation",
+    "verdict": "NEEDS_REVIEW",
+    "confidence": 0.58,
+    "reason": "Clause 11 contains ambiguous cross-references to regional liability exclusions; confidence below threshold.",
+    "rule_id": "combiner.abstain",
+    "evidence": [
+      {
+        "doc_id": "master_agreement.pdf",
+        "page": 7,
+        "bbox": [72.0, 480.0, 520.0, 530.0],
+        "passage_text": "11.2 Subject to clause 11.4, neither party excludes liability where prohibited by applicable jurisdiction laws."
+      }
+    ],
+    "review_status": "pending"
+  }
+]
