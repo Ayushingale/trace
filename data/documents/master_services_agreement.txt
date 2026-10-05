@@ -1,0 +1,26 @@
+MASTER SERVICES AGREEMENT
+
+Section 1: Parties and Scope
+This Master Services Agreement ("Agreement") is entered into by and between Acme Global Technologies Inc. ("Client") and Nexus Cloud Solutions LLC ("Service Provider").
+
+Section 2: Term and Termination
+2.1 Term: This Agreement shall commence on the Effective Date and continue for a fixed duration of twenty-four (24) months, unless terminated earlier in accordance with Section 9.
+2.2 Renewal: The Agreement may renew for successive twelve (12) month terms upon mutual written agreement executed at least thirty (30) days prior to the expiration of the then-current term.
+
+Section 4: Fees and Invoicing
+4.1 Invoicing: Service Provider shall invoice Client on the first calendar day of each month for services rendered.
+4.2 Payment Terms: Undisputed invoices shall be payable within thirty (30) business days following receipt by Client.
+4.3 Currency: All payments shall be made in United States Dollars ($ USD) via wire transfer.
+
+Section 8: Confidentiality
+8.1 Duration: Confidential Information disclosed hereunder shall be protected for a period of five (5) years following the termination or expiration of this Agreement.
+8.2 Standard of Care: Each party shall protect the other party's confidential materials using the same degree of care it uses for its own proprietary information, but no less than reasonable care.
+
+Section 9: Termination
+9.1 Termination for Cause: Either party may terminate immediately if the other party commits a material breach and fails to cure within thirty (30) calendar days of written notice.
+9.3 Termination for Convenience: Either party may terminate this Agreement without cause upon sixty (60) days prior written notice.
+
+Section 11: Limitation of Liability
+11.1 Cap: Subject to clause 11.2, each party's aggregate liability under this Agreement shall not exceed twelve (12) months of service fees paid or payable.
+11.2 Exclusions: Neither party excludes or limits liability for death, personal injury caused by negligence, fraud, gross negligence, or intentional misconduct where prohibited by applicable jurisdiction laws.
+11.3 Consequential Damages: Subject to clause 11.4, neither party shall be liable for indirect, punitive, or consequential damages.

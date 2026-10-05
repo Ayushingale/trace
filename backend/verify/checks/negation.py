@@ -19,6 +19,8 @@ NEGATION_PATTERNS = [
     r"\bexcept\b",
     r"\bexcluding\b",
     r"\bexcludes\b",
+    r"\buncapped\b",
+    r"\bunlimited\b",
     r"\bnon-existent\b",
     r"\bincapable\b",
 ]

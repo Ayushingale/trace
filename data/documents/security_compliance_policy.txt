@@ -1,0 +1,17 @@
+GLOBAL INFORMATION SECURITY AND COMPLIANCE POLICY
+
+Section 1: Data Encryption Standards
+1.1 Encryption at Rest: All customer data, backups, and databases shall be encrypted at rest using AES-256 encryption.
+1.2 Encryption in Transit: All communications across public networks shall utilize TLS 1.3 encryption with strict cipher suites.
+
+Section 2: Certifications and Audits
+2.1 SOC 2: The company shall maintain an annual SOC 2 Type II attestation report conducted by an accredited third-party auditor.
+2.2 Penetration Testing: Third-party penetration tests must be performed semi-annually.
+
+Section 3: Incident Response and Breach Notification
+3.1 Notification Window: In the event of a confirmed security breach involving personal identifiable information (PII), affected clients and regulatory bodies shall be notified in writing within seventy-two (72) hours.
+3.2 Incident Classification: Severity 1 incidents require an emergency response committee meeting within sixty (60) minutes of initial detection.
+
+Section 4: Data Retention and Disposal
+4.1 Audit Logs: Financial and security audit logs shall be retained for a mandatory period of seven (7) years.
+4.2 Media Sanitization: Deprecated hard drives and storage media shall be sanitized in compliance with NIST SP 800-88 guidelines.

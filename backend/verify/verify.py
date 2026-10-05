@@ -102,6 +102,26 @@ def verify(claim: Claim, passages: List[Passage]) -> VerdictResult:
 
         # Check for hard deterministic mismatches (Contradictions)
         # Order checks prioritizing the routed claim_type
+        # Check if primary dedicated check resolves duration, numeric, or date claim immediately
+        if claim_type in ("duration", "numeric", "date"):
+            primary_chk = dur_res if claim_type == "duration" else num_res if claim_type == "numeric" else date_res
+            if primary_chk["status"] == "match":
+                return VerdictResult(
+                    verdict=VerdictEnum.SUPPORTED,
+                    confidence=0.95,
+                    reason=primary_chk["detail"],
+                    rule_id=primary_chk["rule_id"],
+                    evidence=evidence_list,
+                )
+            elif primary_chk["status"] == "mismatch":
+                return VerdictResult(
+                    verdict=VerdictEnum.CONTRADICTED,
+                    confidence=0.93,
+                    reason=primary_chk["detail"],
+                    rule_id=primary_chk["rule_id"],
+                    evidence=evidence_list,
+                )
+
         ordered_checks = []
         if claim_type == "negation":
             ordered_checks.append(neg_res)
@@ -132,21 +152,24 @@ def verify(claim: Claim, passages: List[Passage]) -> VerdictResult:
                 )
 
         # If deterministic match with high certainty on specific claim types:
-        if claim_type in ("duration", "numeric", "date"):
+        if claim_type in ("duration", "numeric", "date", "entity"):
             if (
                 dur_res["status"] == "match"
                 or num_res["status"] == "match"
                 or date_res["status"] == "match"
+                or ent_res["status"] == "match"
             ):
                 active_rule = (
                     dur_res["rule_id"] if dur_res["status"] == "match"
                     else num_res["rule_id"] if num_res["status"] == "match"
-                    else date_res["rule_id"]
+                    else date_res["rule_id"] if date_res["status"] == "match"
+                    else ent_res["rule_id"]
                 )
                 active_detail = (
                     dur_res["detail"] if dur_res["status"] == "match"
                     else num_res["detail"] if num_res["status"] == "match"
-                    else date_res["detail"]
+                    else date_res["detail"] if date_res["status"] == "match"
+                    else ent_res["detail"]
                 )
                 return VerdictResult(
                     verdict=VerdictEnum.SUPPORTED,

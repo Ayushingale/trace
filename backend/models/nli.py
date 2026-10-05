@@ -30,11 +30,15 @@ class NLIModel:
             return
         self._initialized = True
         try:
-            from transformers import pipeline
-            self._pipeline = pipeline("text-classification", model=self.model_name, top_k=None)
-            logger.info(f"Loaded NLI model: {self.model_name}")
+            if os.getenv("USE_TRANSFORMERS_NLI", "0") == "1":
+                from transformers import pipeline
+                self._pipeline = pipeline("text-classification", model=self.model_name, top_k=None, local_files_only=True)
+                logger.info(f"Loaded NLI model: {self.model_name}")
+            else:
+                self._pipeline = None
         except Exception as e:
-            logger.info(f"Using rule/heuristic NLI scorer (transformers not initialized: {e})")
+            self._pipeline = None
+            logger.info(f"Using fast rule/heuristic NLI scorer: {e}")
 
     def predict_proba(self, premise: str, hypothesis: str) -> Dict[str, float]:
         """
