@@ -128,18 +128,47 @@ class ClaimTypeClassifier:
         self._train()
 
     def classify(self, text: str) -> str:
-        # Heuristic fast-path rules
         lower = text.lower()
-        if re.search(r"\b(shall not|must not|cannot|neither|nor|without|except|unless|excludes?)\b", lower):
+
+        # 1. Negation: explicit negative polarity
+        if re.search(r"\b(shall not|must not|cannot|can not|neither|nor|without|except|unless|excludes?|no\s+\w+|not\b|never\b)\b", lower):
             return "negation"
-        if re.search(r"\b(business days?|calendar days?|months?|weeks?|hours?|years?)\b", lower) and re.search(r"\d+|\b(thirty|sixty|twenty|ten)\b", lower):
-            return "duration"
-        if re.search(r"[%$₹€£]|inr|usd|crore|lakh|million|billion|\b\d+(?:,\d+)*(?:\.\d+)?\b", lower):
-            return "numeric"
-        if re.search(r"\b(january|february|march|april|may|june|july|august|september|october|november|december|\d{4}-\d{2}-\d{2})\b", lower):
+
+        # 2. Date: calendar dates, ISO dates, month names with day/year (distinguish 'may' month from modal 'may')
+        if re.search(
+            r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}(?:st|nd|rd|th)?\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)|"
+            r"(?:january|february|march|april|june|july|august|september|october|november|december)\s+\d{1,2}(?:st|nd|rd|th)?|"
+            r"may\s+\d{1,2}(?:st|nd|rd|th)?|"
+            r"(?:january|february|march|april|june|july|august|september|october|november|december)\s+\d{4}|"
+            r"(?:effective|executed|commenced|on|by|dated)\s+(?:january|february|march|april|may|june|july|august|september|october|november|december))\b",
+            lower,
+        ):
             return "date"
-        if re.search(r"\b(shall|must|may|will|can|obligated|entitled)\b", lower):
+
+        # 3. Duration: temporal spans with numeric count preceding units (e.g., 30 business days, 24 months)
+        if re.search(
+            r"\b(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten|fifteen|twenty|twenty-four|thirty|forty|fifty|sixty|ninety)\s*"
+            r"(?:\(\s*\d+\s*\)\s*)?"
+            r"(?:business\s+days?|working\s+days?|calendar\s+days?|calendar\s+months?|days?|weeks?|months?|years?|hours?)\b",
+            lower,
+        ) and not re.search(r"\b(?:year\s+over\s+year|per\s+year|per\s+month|per\s+day)\b", lower):
+            return "duration"
+
+        # 4. Numeric: currencies, percentages, multipliers, figures
+        if re.search(r"[%$₹€£]|inr|usd|eur|gbp|crores?|cr|lakhs?|lacs?|millions?|billions?|percent|\b\d+(?:,\d+)*(?:\.\d+)?\b", lower):
+            return "numeric"
+
+        # 5. Modal: modal verbs
+        if re.search(r"\b(shall|must|may|will|can|obligated|entitled|mandatory)\b", lower):
             return "modal"
+
+        # 6. Causal
+        if re.search(r"\b(causes?|caused\s+by|leads\s+to|resulted\s+from|results\s+in|because)\b", lower):
+            return "causal"
+
+        # 7. Entity: corporate suffixes
+        if re.search(r"\b(pvt|ltd|inc|corp|corporation|llc|company|technologies|solutions)\b", lower):
+            return "entity"
 
         if self.pipeline:
             try:

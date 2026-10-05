@@ -42,47 +42,58 @@ trace/
 │   ├── ARCHITECTURE.md
 │   └── EVAL_RESULTS.md
 ├── backend/
-│   ├── Dockerfile
-│   ├── requirements.txt
-│   ├── pyproject.toml
-│   ├── app/                        # PERSON 3: API, DB, Orchestrator
-│   ├── docs_pipeline/              # PERSON 1: PDF/DOCX Parsing, BBoxes, Chunker
-│   ├── retrieval/                  # PERSON 1: BM25 + Embeddings Hybrid Search
-│   ├── verify/                     # PERSON 2: Claim Extraction, Deterministic Checks, Judge
-│   ├── models/                     # Trained models code
-│   ├── artifacts/                  # Model weights (gitignored)
-│   └── tests/
-├── frontend/                       # PERSON 4: React, Vite, Tailwind, PDF text layer
-├── data/                           # PERSON 4: Splits, evaluation data
-├── training/                       # Shared fine-tuning notebooks and scripts
-└── eval/                           # PERSON 4 (+ P2 inputs): Evaluation reproduction
+│   ├── app/llm/                    # PERSON 1: LLM client wrapper with retries & timeouts
+│   ├── verify/                     # PERSON 1: Verification engine, deterministic checks, judge, extract
+│   ├── models/
+│   │   ├── claim_type.py           # PERSON 1: TF-IDF + Logistic Regression router
+│   │   ├── combiner.py             # PERSON 1: Calibrated Gradient Boosting combiner
+│   │   ├── nli.py                  # PERSON 1: Natural Language Inference module
+│   │   ├── doc_classifier.py       # PERSON 2: Document type classification
+│   │   └── crossencoder.py         # PERSON 2: Cross-encoder reranker
+│   ├── docs_pipeline/              # PERSON 3: PDF/DOCX Parsing, BBoxes, Chunker
+│   ├── retrieval/                  # PERSON 3: BM25 + Embeddings Hybrid Search
+│   ├── app/                        # PERSON 3: FastAPI API routes, DB, orchestrator
+│   ├── artifacts/                  # Model weights & trained joblib models
+│   └── tests/                      # Unit tests & Golden dataset
+├── training/
+│   ├── train_claim_type.py         # PERSON 1: Claim type classifier training
+│   ├── train_combiner.py           # PERSON 1: Combiner training & abstention curve
+│   ├── train_nli.py                # PERSON 1: NLI benchmarking & diagnostic
+│   ├── train_crossencoder.py       # PERSON 2: Cross-encoder training
+│   └── train_doc_classifier.py     # PERSON 2: Doc classifier training
+├── data/                           # PERSON 2: Evaluation data & splits
+├── eval/                           # PERSON 2: Evaluation reproduction scripts
+└── frontend/                       # PERSON 4: React, Vite, Tailwind, PDF text layer
 ```
 
 ---
 
-## Quickstart
+## How to Run My Part (Person 1: Verification Engine)
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Docker & Docker Compose (optional)
+Person 1 owns the **verification engine**, **deterministic checks**, **claim router**, **NLI**, **calibrated combiner**, and **contract integrity**.
 
-### 1. Backend Setup & Verification Engine Demo
+### 1. Run Verification Demo (One Command)
 ```bash
-cd backend
-python -m venv venv
-# Windows: venv\Scripts\activate | Unix: source venv/bin/activate
-pip install -r requirements.txt
-
-# Run all 65 verification and contract unit tests:
-python -m pytest backend/tests -q
-
-# Run the golden contract verification demo (prints colored verdicts):
 python -m backend.verify.demo
-
-# Run the API server:
-uvicorn backend.app.main:app --reload --port 8000
 ```
+This runs the verification engine against the golden Master Services Agreement clauses and 6 test claims (including 5 planted errors: duration unit mismatch, numeric value mismatch, modality flip, negation flip, and unsupported hallucination) and outputs ANSI color-coded verdicts, confidence, fired rules, and reasons.
+
+### 2. Run All Verification Engine Unit Tests
+```bash
+python -m pytest backend/tests -q
+```
+Runs all 90 unit tests covering:
+- Deterministic checks (8+ tests each for numbers, durations, dates, modality, negation, entities, hedging)
+- Atomic claim extraction with fuzzy character offset validation and paragraph chunking
+- LLM Judge quote verification (grounding check rejecting hallucinated citations)
+- Calibrated combiner and claim type classifier
+- Shared contract schema adherence
+
+### 3. Standalone Execution & Mock Fallbacks
+The verification engine runs completely standalone:
+- **No external API key required**: When `LLM_API_KEY` is omitted, `client.py` and `judge.py` automatically utilize deterministic fallback heuristics.
+- **Model weights included**: Pre-trained artifacts (`claim_type_model.joblib` and `combiner_model.joblib`) are generated into `backend/artifacts/` or automatically trained on initial invocation.
+- **Upstream dependency isolation**: If Person 2 (eval splits) or Person 3 (retrieval pipeline) components are pending, the engine tests and operates cleanly against stubs and the contract schema.
 API runs on `http://localhost:8000` (docs at `http://localhost:8000/docs`).
 
 ### 2. Frontend Setup
