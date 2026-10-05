@@ -96,7 +96,7 @@ The verification engine runs completely standalone:
 - **Upstream dependency isolation**: If Person 2 (eval splits) or Person 3 (retrieval pipeline) components are pending, the engine tests and operates cleanly against stubs and the contract schema.
 API runs on `http://localhost:8000` (docs at `http://localhost:8000/docs`).
 
-### 2. Frontend Setup
+### 2. Frontend Setup & Source Trace Visualizer (Person 4)
 ```bash
 cd frontend
 npm install
@@ -104,7 +104,40 @@ npm run dev
 ```
 UI runs on `http://localhost:5173`.
 
+#### Running Frontend Tests
+```bash
+cd frontend
+npm test
+```
+Runs the Vitest test suite validating `buildGraph` DAG layer compilation, node positioning, and upstream path traversal.
+
+#### How to Switch Between Mocks and the Live Backend
+TRACE supports seamless switching between offline simulated claims and the live backend:
+1. **In the UI**: Click the **Mode: Mocks / Live SSE Backend** pill in the top header. In Mock Mode, the application operates self-contained using `frontend/src/mocks/claims.json` with streaming simulation. In Live Mode, it connects to Person 3's SSE stream at `GET /jobs/{id}/stream`.
+2. **Via Environment Variable**: In `frontend/.env`, configure:
+   ```env
+   VITE_API_URL=http://localhost:8000
+   ```
+   When omitted, `VITE_API_URL` defaults to `http://localhost:8000`.
+
+---
+
+## Person 4 Deliverables: Visualizer & Documentation
+
+- **Source Trace Graph Engine**: 5-layer visual lineage graph built with `@xyflow/react` and `dagre` in [src/graph/](file:///c:/Users/aarya/OneDrive/Desktop/trace/frontend/src/graph).
+- **Three-Column Dark Workspace**:
+  - **Left**: Verify & Ask panels with annotated claim underlines and blue numbered pill badges `[1]`, `[2]`.
+  - **Center**: 5-layer dependency graph with animated verdict-colored edges and upstream path illumination.
+  - **Right**: Itemized claim cards with trust bar, review controls (`Confirm`, `Override`, `Need Evidence`), and "Connected to: N upstream sources".
+- **PDF Drawer**: Slide-in document drawer with scale-adaptive bounding box highlight.
+- **User Interviews & Evidence**: 5 qualitative domain specialist interviews in [docs/EVIDENCE.md](file:///c:/Users/aarya/OneDrive/Desktop/trace/docs/EVIDENCE.md).
+- **Project Submission & Architecture Disclosure**: Comprehensive report in [docs/SUBMISSION.md](file:///c:/Users/aarya/OneDrive/Desktop/trace/docs/SUBMISSION.md).
+- **3-Minute Hackathon Demo Script**: Narration and action cues in [docs/DEMO.md](file:///c:/Users/aarya/OneDrive/Desktop/trace/docs/DEMO.md).
+
+---
+
 ### 3. Docker Compose
 ```bash
 docker-compose up --build
 ```
+
