@@ -13,6 +13,11 @@ with calibrated abstention threshold for NEEDS_REVIEW routing.
 """
 
 import os
+import sys
+
+# Ensure repository root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import Any, Dict, List, Optional, Tuple
 import joblib
 import numpy as np

@@ -8,6 +8,12 @@ Rule: Code decides what code can decide; trained models handle the rest; LLM is 
 """
 
 import logging
+import os
+import sys
+
+# Ensure repository root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import List, Optional
 from backend.app.schemas import (
     Claim,

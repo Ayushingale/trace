@@ -8,6 +8,10 @@ Prints verified verdicts for the golden contract example with planted errors.
 import json
 import os
 import sys
+
+# Ensure repository root is on sys.path so script can be run directly or as a module
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from backend.app.schemas import Claim, Passage, VerdictEnum, ReviewStatusEnum
 from backend.verify.verify import verify
 

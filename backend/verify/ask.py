@@ -5,7 +5,13 @@ through the TRACE verification engine, and drops any non-SUPPORTED sentences.
 """
 
 import logging
+import os
 import re
+import sys
+
+# Ensure repository root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import Any, Dict, List
 from backend.app.llm.client import call_llm
 from backend.app.schemas import Claim, Passage, VerdictEnum, ReviewStatusEnum

@@ -8,6 +8,11 @@ Run with:
 """
 
 import os
+import sys
+
+# Ensure repository root is on sys.path so script can be run directly or as a module
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression

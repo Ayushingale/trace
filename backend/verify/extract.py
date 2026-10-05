@@ -5,7 +5,13 @@ Validates offsets against original text and uses fuzzy matching to correct sligh
 """
 
 import logging
+import os
 import re
+import sys
+
+# Ensure repository root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import List, Dict, Any, Optional
 from rapidfuzz import fuzz
 from backend.app.llm.client import call_llm

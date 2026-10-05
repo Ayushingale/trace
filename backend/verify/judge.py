@@ -6,6 +6,12 @@ Rejects judge output if the quote is not actually present in the source passage.
 """
 
 import logging
+import os
+import sys
+
+# Ensure repository root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import Any, Dict, Optional
 from rapidfuzz import fuzz
 from backend.app.llm.client import call_llm

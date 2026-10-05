@@ -7,6 +7,11 @@ Used to route claims to appropriate deterministic and semantic checkers.
 
 import os
 import re
+import sys
+
+# Ensure repository root is on sys.path so script can be run directly
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from typing import Dict, List, Optional, Tuple
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer

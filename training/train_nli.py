@@ -12,7 +12,13 @@ Run with:
     python -m training.train_nli
 """
 
+import os
+import sys
 import time
+
+# Ensure repository root is on sys.path so script can be run directly or as a module
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from typing import Dict, List, Tuple
 from backend.models.nli import predict_nli
 from backend.verify.checks.modality import check_modality
